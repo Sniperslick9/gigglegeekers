@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gigglegeekers | CyberHunt 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-blue: #00f2ff; --neon-pink: #ff007b; --cyber-green: #39ff14;
+            --bg-dark: #050510; --panel-bg: rgba(20, 20, 35, 0.95);
+        }
+        * { scroll-behavior: smooth; box-sizing: border-box; } 
+        body { font-family: 'Space Grotesk', sans-serif; background-color: var(--bg-dark); color: white; margin: 0; line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        h1, h2, h3 { font-family: 'Press Start 2P', cursive; text-transform: uppercase; }
+        h2 { color: var(--neon-blue); font-size: 1rem; margin-top: 6rem; margin-bottom: 2rem; border-left: 4px solid var(--neon-pink); padding-left: 15px; }
+
+        /* NAVIGATION BAR */
+        header { border-bottom: 2px solid var(--neon-blue); padding: 15px 0; background: var(--panel-bg); text-align: center; position: sticky; top: 0; z-index: 100; }
+        .nav-buttons { margin-top: 15px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .nav-btn { background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue); padding: 8px 15px; font-family: 'Press Start 2P'; font-size: 0.5rem; text-decoration: none; transition: 0.3s; cursor: pointer; }
+        .nav-btn:hover { background: var(--neon-blue); color: black; box-shadow: 0 0 15px var(--neon-blue); }
+
+        /* AI LOGIC SECTION */
+        .ai-info-box { background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); border: 2px solid var(--cyber-green); padding: 25px; border-radius: 15px; margin: 2rem 0; position: relative; }
+        .ai-info-box h3 { color: var(--cyber-green); font-size: 0.8rem; margin-bottom: 15px; }
+        .ai-tag { position: absolute; top: -10px; right: 20px; background: var(--cyber-green); color: black; padding: 2px 10px; font-size: 0.6rem; font-weight: bold; }
+
+        /* TERMINAL VIEW */
+        .terminal-window { background: #000; border: 1px solid #333; border-radius: 8px; overflow: hidden; margin: 2rem 0; }
+        .terminal-header { background: #222; padding: 10px; display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+        .terminal-body { padding: 20px; font-family: 'Courier New', Courier, monospace; color: var(--cyber-green); font-size: 0.85rem; min-height: 150px; }
+
+        /* MEDIA SECTION */
+        .media-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; }
+        .main-video { background: #000; border: 2px solid var(--neon-pink); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; }
+        .screenshot-sidebar { display: grid; grid-template-rows: repeat(3, 1fr); gap: 10px; }
+        .ss-slot { background: #111; border: 1px solid #444; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .ss-slot img { width: 100%; height: 100%; object-fit: cover; }
+        .label { position: absolute; bottom: 5px; left: 5px; font-size: 0.5rem; background: rgba(0,0,0,0.8); padding: 2px 5px; color: var(--neon-blue); }
+
+        /* TIMELINE GRID */
+        .mission-log { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; }
+        .log-box { background: rgba(255,255,255,0.03); padding: 15px; border-top: 2px solid var(--neon-pink); }
+        .log-month { font-family: 'Press Start 2P'; font-size: 0.5rem; color: var(--neon-pink); display: block; margin-bottom: 8px; }
+
+        /* TEAM GRID */
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .member-card { background: var(--panel-bg); padding: 20px; border: 1px solid #333; text-align: center; border-radius: 10px; transition: 0.3s; }
+        .member-card:hover { border-color: var(--neon-blue); transform: translateY(-5px); }
+        .member-card i { font-size: 2rem; color: var(--neon-blue); margin-bottom: 10px; }
+
+        .btn-large { background: var(--cyber-green); color: black; padding: 1.2rem 2.5rem; font-family: 'Press Start 2P'; font-size: 0.8rem; text-decoration: none; display: inline-block; box-shadow: 0 0 15px var(--cyber-green); margin-top: 1rem; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-text">GIGGLEGEEKERS // CYBERHUNT_2026</div>
+    <div class="nav-buttons">
+        <a href="#ai-logic" class="nav-btn">01_AI_LOGIC</a>
+        <a href="#media" class="nav-btn">02_GAMEPLAY</a>
+        <a href="#leaderboard" class="nav-btn">03_SCORES</a>
+        <a href="#mission" class="nav-btn">04_TIMELINE</a>
+        <a href="#team" class="nav-btn">05_TEAM</a>
+    </div>
+</header>
+
+<div class="container">
+
+    <section id="ai-logic">
+        <h2>[AI_INTEGRATION_SYSTEM]</h2>
+        <div class="ai-info-box">
+            <div class="ai-tag">CORE LOGIC</div>
+            <h3>CYBERSECURITY QUESTION ENGINE</h3>
+            <p>Our project features a custom AI integration designed to educate while you play. Between gameplay rounds, the AI triggers a quiz sequence:</p>
+            <ul style="color: var(--neon-blue); font-size: 0.9rem; margin-top: 10px;">
+                <li><strong>8-10 Question Types:</strong> The system randomly selects from multiple-choice categories including Phishing, Malware, Network Security, and Encryption.</li>
+                <li><strong>Interactive Feedback:</strong> Correct answers contribute to the live Firebase leaderboard.</li>
+            </ul>
+        </div>
+
+        <div class="terminal-window">
+            <div class="terminal-header"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+            <div class="terminal-body">
+                <p>> GIGGLEGEEKERS AI BOOTING...</p>
+                <p>> LOADED 10 QUESTION PROMPTS [SUCCESS]</p>
+                <p style="color: white;">> [SYSTEM] Awaiting controller response for: "What does SSL stand for?"</p>
+                <p>> Syncing data to: https://cyberhunt-3dd5a.web.app/</p>
+                <p class="blink">_</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="media">
+        <h2>[PROJECT_VISUALS]</h2>
+        <div class="media-grid">
+            <div class="main-video">
+                <p style="font-family: 'Press Start 2P'; font-size: 0.6rem; color: #444;">[GAMEPLAY_VIDEO_SLOT]</p>
+            </div>
+            <div class="screenshot-sidebar">
+                <div class="ss-slot"><span class="label">WINDOWS_OPT</span><i class="fas fa-image" style="opacity: 0.1;"></i></div>
+                <div class="ss-slot"><span class="label">CONTROLLER_MAP</span><i class="fas fa-image" style="opacity: 0.1;"></i></div>
+                <div class="ss-slot"><span class="label">AI_CODE_BLOCK</span><i class="fas fa-image" style="opacity: 0.1;"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="leaderboard" style="text-align: center; padding: 5rem 0;">
+        <div style="border: 2px solid var(--cyber-green); padding: 3rem; background: rgba(0,255,100,0.05);">
+            <h3 style="color: var(--cyber-green); margin-bottom: 1.5rem;">FIREBASE_LIVE_STATS</h3>
+            <p>View the real-time scores from the Cheltenham Science Festival build.</p><br>
+            <a href="https://cyberhunt-3dd5a.web.app/" target="_blank" class="btn-large">LAUNCH LEADERBOARD</a>
+        </div>
+    </section>
+
+    <section id="mission">
+        <h2>[PROJECT_TIMELINE]</h2>
+        <div class="mission-log">
+            <div class="log-box"><span class="log-month">OCT 2025</span>Concept phase and sourcing the Retro Controller hardware.</div>
+            <div class="log-box"><span class="log-month">NOV 2025</span>Stripping and optimizing the Windows OS environment.</div>
+            <div class="log-box"><span class="log-month">DEC 2025</span>Coding the AI question bank (8-10 security topics).</div>
+            <div class="log-box"><span class="log-month">JAN 2026</span>Firebase database architecture and real-time syncing.</div>
+            <div class="log-box"><span class="log-month">FEB 2026</span>Integration of Retro Controller with CyberHunt engine.</div>
+            <div class="log-box"><span class="log-month">MAR 2026</span>Testing, bug fixing, and Science Festival UI polishing.</div>
+            <div class="log-box" style="border-color: var(--cyber-green); background: rgba(57, 255, 20, 0.05);"><span class="log-month">APR 2026</span>LIVE DEPLOYMENT: Cheltenham Science Festival!</div>
+        </div>
+    </section>
+
+    <section id="team">
+        <h2>[THE_GIGGLEGEEKERS]</h2>
+        <div class="team-grid">
+            <div class="member-card">
+                <i class="fas fa-user-ninja"></i>
+                <h4 style="font-size: 0.7rem; margin: 10px 0;">TEAM MEMBER 1</h4>
+                <p style="font-size: 0.7rem; color: #888;">Lead Dev</p>
+            </div>
+            <div class="member-card">
+                <i class="fas fa-user-shield"></i>
+                <h4 style="font-size: 0.7rem; margin: 10px 0;">TEAM MEMBER 2</h4>
+                <p style="font-size: 0.7rem; color: #888;">Cyber Security</p>
+            </div>
+            <div class="member-card">
+                <i class="fas fa-user-robot"></i>
+                <h4 style="font-size: 0.7rem; margin: 10px 0;">TEAM MEMBER 3</h4>
+                <p style="font-size: 0.7rem; color: #888;">AI Logic</p>
+            </div>
+            <div class="member-card">
+                <i class="fas fa-user-astronaut"></i>
+                <h4 style="font-size: 0.7rem; margin: 10px 0;">TEAM MEMBER 4</h4>
+                <p style="font-size: 0.7rem; color: #888;">Hardware Integration</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer style="padding: 5rem; text-align: center; color: #444; font-family: 'Press Start 2P'; font-size: 0.5rem; border-top: 1px solid #222; margin-top: 5rem;">
+    CONNECTED // GIGGLEGEEKERS // STATION_2026
+</footer>
+
+</body>
+</html>
